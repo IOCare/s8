@@ -1,0 +1,44 @@
+<ion-view ng-init="Init()" view-title="Board Config" class="bg-bg">
+
+  <ion-content class="padding text-center">
+
+<!-- <ion-slide-box>
+  <ion-slide>1</ion-slide>
+  <ion-slide>2</ion-slide>
+</ion-slide-box> -->
+
+    <h1>Configure Board </h1>
+
+	Board id: {{myboard.model}}, <span ng-show="myboard.type=='Switch8'">8</span><span ng-show="myboard.type=='Switch4'">8</span> switches, ip: {{myboard.url}}
+
+
+
+	<div class="row button-row" ng-repeat="buton in buttons.data" ng-if="$index % 2 === 0">
+		<div class="col col-50 on text-center" ng-if="$index < buttons.data.length">
+			<!-- <img ng-src="{{buttons[$index + 1].src}}" width="100%" /> 
+			class="button button-{{buttons[$index].state=='on'?'positive':'dark'}} large_button" 
+
+			ng-class ="{'button large_button  button-dark': !buttons[$index].state, ' button large_button  button-calm': buttons[$index].state}" 
+			-->
+			<button id="{{$index}}" on-hold="EditDevice($index)" value="{{!buttons.data[$index].state}}" ng-click="send_to_smitch($event, buttons.data[$index].state)" class="button button-{{buttons.data[$index].state>=1?'calm':'dark'}} large_button1" >
+				<i class="i_{{buttons.data[$index].type}} icon_custom {{buttons.data[$index].state>=1?'icon_custom2':'icon_custom3'}}"></i>
+				<span class="{{buttons.data[$index].state>=1?'icon_custom2':'icon_custom3'}}">{{buttons.data[$index].name}}</span>
+			</button>
+		</div>
+		<div class="col col-50 text-center" ng-if="$index + 1 < buttons.data.length">
+			<!-- <img ng-src="{{buttons[$index + 1].src}}" width="100%" /> -->
+			<button id="{{$index+1}}" on-hold="EditDevice($index+1)" value="{{!buttons.data[$index+1].state}}" ng-click="send_to_smitch($event, buttons.data[$index+1].state)" class="button button-{{buttons.data[$index+1].state>=1?'calm':'dark'}} large_button1">
+				<i class="i_{{buttons.data[$index+1].type}} icon_custom {{buttons.data[$index+1].state>=1?'icon_custom2':'icon_custom3'}}"></i>
+				<span class="{{buttons.data[$index+1].state>=1?'icon_custom2':'icon_custom3'}}">{{buttons.data[$index + 1].name}}</span>
+			</button>           
+		</div>
+	</div>
+
+	<!-- <div class="row text-center">
+		<div class="col col-100 text-center">
+			<button class="button button-dark" ng-click="SaveBoardConfig()">Save Settings</button>
+		</div>
+	</div> -->
+
+  </ion-content>
+</ion-view>

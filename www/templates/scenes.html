@@ -1,0 +1,64 @@
+<ion-view view-title="{{properties.title}}" ng-init="Init()" class="bg-bg">
+	<ion-floating-button ng-click="CreateScene()" has-footer="false" button-color="#009688" icon="ion-plus" iconColor="#fff">
+	</ion-floating-button>
+	<ion-content class="padding" >
+	<ion-toggle class="right" ng-change="ShowInactive()" ng-model="scenestate.showactive" toggle-class="toggle-calm">Show Inactive</ion-toggle>
+
+
+
+	<ion-list show-delete="shouldShowDelete"
+	          show-reorder="shouldShowReorder"
+	          can-swipe="listCanSwipe">
+	  <ion-item ng-repeat="scene in scenes"
+	            class="item-icon-left" ng-click="ActivateScene(scene)" ng-if="scene.active===1">
+		<i class="icon ion-bookmark"></i>
+
+	    <!-- <img ng-src="img/scene.png"> -->
+	    <h2>{{scene.name}}</h2>
+	    <ion-option-button class="button-assertive"
+	                       ng-click="DeleteScene(scene)">
+	      Delete
+	    </ion-option-button>
+	    <ion-option-button class="button-balanced"
+	                       ng-click="EditScene(scene)">
+	      Edit
+	    </ion-option-button>
+	    <ion-delete-button class="ion-minus-circled"
+	                       ng-click="items.splice($index, 1)">
+	    </ion-delete-button>
+	    <ion-reorder-button class="ion-navicon"
+	                        on-reorder="reorderItem(item, $fromIndex, $toIndex)">
+	    </ion-reorder-button>
+
+	  </ion-item>
+
+	  <ion-item ng-repeat="scene in scenes"
+	            class="item-icon-left" ng-if="(scene.active===0) && (scenestate.showactive)">
+
+	    <i class="icon ion-bookmark"></i>
+	    <h2>{{scene.name}}</h2>
+	    
+	    <ion-option-button class="button-assertive"
+	                       ng-click="RestoreScene(scene)">
+	      Restore
+	    </ion-option-button>
+
+	    <ion-delete-button class="ion-minus-circled"
+	                       ng-click="items.splice($index, 1)">
+	    </ion-delete-button>
+	    <ion-reorder-button class="ion-navicon"
+	                        on-reorder="reorderItem(item, $fromIndex, $toIndex)">
+	    </ion-reorder-button>
+
+	  </ion-item>
+
+
+
+
+	</ion-list>
+
+
+
+
+	</ion-content>
+</ion-view>

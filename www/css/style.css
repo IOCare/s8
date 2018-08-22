@@ -1,0 +1,321 @@
+/* Empty. Add your own CSS if you like */
+.button-row {
+     -webkit-align-items: center;
+}
+.bg-bg {
+  background-color: #FFFFFF;
+}
+.bg-san {
+  background-color: #ff9800;
+}
+
+
+
+.button-square{
+  border-radius:0px 0px 0px 0px;
+}
+.large_button {
+	line-height: 7vh !important;
+	width: 100%;
+  /*background-color : #00796b !important;*/
+}
+.large_button1 {
+	line-height: 7vh !important;
+	border-color: #d24f6e;
+  border-radius:0px 0px 0px 0px;
+	width: 100%;
+  background-color : #00796b !important;
+}
+/* ANk!$dsf#24it@17 */
+.icon_custom {
+  font-size:40px;
+  padding:5px;
+    color: #ffffff;
+  display: block;
+    margin: 0 auto;
+    height: 40px;
+}
+
+i.iocare_icon::before {
+  vertical-align: middle;
+  margin-right: 5px;
+  margin-top: -5px;
+  font-size: 26px;
+  color: #ffffff;
+}
+.icon_custom2 {
+    color: #FFFFFF;
+}
+.icon_custom3 {
+    color: #ffffff;
+}
+
+.bt{
+   color: #ffffff;
+}
+.item .item-content {
+  background-color: transparent !important;
+}
+.bordr{border-color: #b2b2b2 !important;}
+.cover{
+background:url('drawable-port-xxxhdpi-screen.png') no-repeat center center fixed; 
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        background-size: cover;
+}
+
+.rangev {
+  -ms-transform: rotate(-90deg);
+  /* IE 9 */
+  -webkit-transform: rotate(-90deg);
+  /* Chrome, Safari, Opera */
+  transform: rotate(-90deg);
+}
+.rangev i.icon {
+  -ms-transform: rotate(90deg);
+  /* IE 9 */
+  -webkit-transform: rotate(90deg);
+  /* Chrome, Safari, Opera */
+  transform: rotate(90deg);
+}
+
+.login-container {
+    display: -webkit-flex;
+    -webkit-flex-direction: column;
+    /*background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#efad62), color-stop(100%,#f7d47c));
+    background: -webkit-linear-gradient(top, #efad62 0%,#f7d47c 100%);*/
+}
+.fixed-outside{
+  position: absolute;
+  bottom: 160px;
+  width: 100%;
+  height:  160px;
+  text-align:center;
+}
+.h-login{
+color:#ff0066;
+  text-align:center;
+}
+/*
+.large_button:hover {
+	border-color: #28a54c;
+	background-color: #33cd5f;
+	text-decoration: none; 
+}
+*/
+
+.col-clr {
+    line-height: 10vh !important;
+  border-color: #28a54c;
+  border: 2px;
+  background-color: #33cd5f;
+  text-decoration: none; 
+}
+.img-responsive
+{
+  width: 100%;
+height: auto;
+}
+/*
+.scroll-content{
+background-color:#0072bc;background-image: url(image); 
+}
+.scroll-content{
+    background: url("../media/images/background.jpg") no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+
+}
+
+.pane {
+    
+	background-color:#0072bc;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+}
+*/
+
+
+.item {
+  font-size: 14px !important;
+}
+
+$balanced: #1aa1e1;
+$fontColor: #ffffff;
+$logo: '../img/lo.png';
+
+.company-logo {
+  vertical-align: middle;
+  max-width: 60%;
+  content: url($logo);
+}
+
+.bar-balanced {
+  background-color: $balanced !important;
+  border-color: darken($balanced, 5%) !important;
+}
+
+.platform-android {
+  $menu-background: #555555;
+
+  .menu {
+    background-color: $menu-background !important;
+
+    & a:not(.item-divider):hover, & a:not(.item-divider):active {
+      background-color: #464646;
+      background-image: linear-gradient(left, $balanced, $balanced 7px, transparent 7px, transparent 100%) !important;
+      background-image: -webkit-linear-gradient(left, $balanced, $balanced 7px, transparent 7px, transparent 100%) !important;
+    }
+
+    .active {
+      background-color: #464646 !important;
+      background-image: linear-gradient(left, $balanced, $balanced 7px, transparent 7px, transparent 100%) !important;
+      background-image: -webkit-linear-gradient(left, $balanced, $balanced 7px, transparent 7px, transparent 100%) !important;
+    }
+
+    .item, .bar-header {
+      background-color: transparent;
+      color: #ffffff;
+      border: none;
+      padding-top: 16px;
+      padding-bottom: 16px;
+      i:before {
+        font-size: 22px;
+      }
+    }
+
+    .bar-header {
+      background-color: $balanced;
+    }
+  }
+
+  /* Override the Ionic icons with Android specific ones */
+  // ion-android-home
+  .ion-home:before {
+    content: "\f38f";
+  }
+
+  // ion-android-checkbox-outline
+  .ion-compose:before {
+    content: "\f373";
+  }  
+
+  // ion-android-contacts
+  .ion-person:before {
+    content: "\f2d9";
+  }
+}
+
+.my-container {
+    /*background-image:  url("menubg1.jpg");*/
+    background-color: #26a69a;
+    background-repeat: repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    height: 100%;
+    position: absolute;
+}
+
+.bar.bar-profile {
+    background-color: #FFF;
+    height: 170px;
+}
+
+.bar .profile {
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 0;
+    overflow: hidden;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+    padding-top: 15px;
+}
+
+.bar.bar-calm {
+  background-color: #009688;
+}
+.item.transp {
+    background-color: transparent;
+    color: #fff;
+}
+.transp .item-content {
+    background-color: transparent !important;
+    color: #fff;
+}
+.app-logo{ max-width:100px; margin:auto; background-repeat:no-repeat;background-position:center;}
+.top-content { padding-top: 10vh;  text-align: center;   }
+.loginButton{ padding-bottom:2px;}
+.remvoeBP{ padding-bottom:120px;}
+.removePM{ margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; }
+.hdrt {
+    background-color: transparent !important;
+    color: #fff;
+}
+.custom-dark{
+    background-color : #ff7465 !important;
+}
+.custom-tab{
+    background-color : #d24f6e !important;
+}
+  .foot {
+    position : absolute;
+    bottom : 410px;
+    height : 50px;
+    margin-top : 10px;
+  }
+  .foot1 {
+    position : absolute;
+    bottom : 160px;
+    height : 40px;
+    margin-top : 40px;
+  }
+
+
+
+.profile .name {
+    color: #26a69a;
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+}
+
+.profile-picture {
+    border-radius: 50%;
+}
+
+.menu .has-header
+{
+    top: 169px;
+}
+
+.spinner svg {
+  width: 48px;
+  height: 48px;
+  stroke: #ff3300;
+  fill: #0099ff;
+}
+
+@media (min-width: 0px) {
+  .modal-backdrop-bg {
+    opacity: 0.5 !important;
+    background-color: #000;
+  }
+}
+
+
+.vertical-align-content > *
+{
+     display: flex!important;
+     align-content: center!important;
+     align-items: center!important;
+}
+
+.spinner svg {
+  stroke: #009688;
+  fill: #009688;
+}

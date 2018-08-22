@@ -1,0 +1,10 @@
+<ion-view ng-init="Init()" view-title="Remote Type" class="bg-bg">
+  <ion-content class="padding">
+
+    <a href="#/app/brands/{{type.id}}" id="menu2-button8" style="border-radius:0px 0px 0px 0px;" class="button  button-dark  button-block icon-left {{type.type_icon}}" ng-repeat="type in types">
+      {{type.type_code}}
+    </a>
+
+
+  </ion-content>
+</ion-view>

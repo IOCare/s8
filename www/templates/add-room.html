@@ -1,0 +1,35 @@
+<ion-modal-view class="bg-bg">
+<ion-header-bar class="bar bar-header bar-calm">
+  <h1 class="title">Create Room</h1>
+  <button class="button button-clear button-primary" ng-click="modal.hide()">Cancel</button>
+</ion-header-bar>
+<ion-content class="padding">
+  <div class="list ">
+
+  <div class="item item-input-inset">
+    <label class="item-input-wrapper">
+      <input ng-model="roomdata.name" placeholder="Room Name" class="" type="text">
+	  <input ng-model="roomdata.id" type="hidden">
+    </label>
+  </div>
+
+<!-- 	<label class="item item-input item-dark">
+	  <input ng-model="roomdata.name" placeholder="Room Name" class="bordr" type="text">
+	  <input ng-model="roomdata.id" type="hidden">
+	</label> -->
+	
+	<label class="item item-input item-select">
+	<div class="input-label">
+	  Type
+	</div>
+	<select ng-model="roomdata.type">
+	  <option value="bedroom" {{roomdata.type=='bedroom'?'selected':''}}>Bedroom</option>
+	  <option value="hall" {{roomdata.type=='hall'?'selected':''}}>Hall</option>
+	  <option value="kitchen" {{roomdata.type=='kitchen'?'selected':''}}>Kitchen</option>
+	  <option value="other" {{roomdata.type=='other'?'selected':''}}>Other</option>
+	</select>
+	</label>
+	<button class="button button-full button-balanced" ng-click="SaveRoom(roomdata)">Save</button>
+  </div>
+</ion-content>
+</ion-modal-view>

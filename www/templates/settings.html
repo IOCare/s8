@@ -1,0 +1,29 @@
+<ion-view view-title="Settings" ng-init="onInit()">
+  <ion-content class="padding">
+    <h1>Settings</h1>
+    <div class="align-center" style="text-align:center;">
+
+		<label class="item item-input">
+			<div class="input-label">
+			  External IP/Domain
+			</div>
+			<input ng-model="settingsData.externalIp" type="text">
+		</label>
+
+		<label class="item item-input item-select">
+			<div class="input-label">
+			  Home SSID
+			</div>
+			<select ng-model="settingsData.home_router">
+				<option value="" disabled>Select SSID</option>
+			  <option ng-repeat="router in routers track by $index" value="{{router}}" >{{router.SSID}}-{{router.BSSID}}</option>
+			</select>
+		</label> 
+
+
+
+		<button class="button button-full button-balanced" ng-click="SaveSettings()">Save</button>
+    </div>
+
+  </ion-content>
+</ion-view>

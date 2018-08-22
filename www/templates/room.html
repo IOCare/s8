@@ -1,0 +1,58 @@
+<ion-view view-title="{{properties.title}}" ng-init="Init()" class="bg-bg">
+	<ion-floating-button ng-click="AddDevice($event)" has-footer="false" button-color="#009688" icon="ion-plus" iconColor="#fff">
+	</ion-floating-button>
+	<ion-content class="text-center padding" scroll="false" >
+	<h4>{{room.name}}</h4>
+
+
+	<ion-slides  options="options" slider="data.slider">
+		<ion-slide-page ng-repeat="buttons in boardButtons" >{{BID=$index;""}}
+		<div class="row button-row" ng-repeat="buton in buttons" ng-if="$index % 2 === 0">
+			<div class="col col-50 on text-center" ng-if="$index < buttons.length">
+				<!-- <img ng-src="{{buttons[$index + 1].src}}" width="100%" /> 
+				class="button button-{{buttons[$index].state=='on'?'positive':'dark'}} large_button" 
+
+				ng-class ="{'button large_button  button-dark': !buttons[$index].state, ' button large_button  button-calm': buttons[$index].state}" 
+				-->
+				<button id="{{$index}}" ng-if="buttons[$index].type=='fan'" on-hold="OpenDimmer($event,BID)"  value="{{!buttons[$index].state}}" ng-click="send_to_smitch($event, buttons[$index].state,BID)" class="button button-{{buttons[$index].state>=1?'calm':'dark'}} large_button" >
+					<i class="i_{{buttons[$index].type}} icon_custom"></i>
+					<span class="bt">{{buttons[$index].name}}</span>
+				</button>
+
+				<button id="{{$index}}" value="{{!buttons[$index].state}}" ng-if="buttons[$index].type!='fan'" ng-click="send_to_smitch($event, buttons[$index].state,BID)" class="button button-{{buttons[$index].state>=1?'calm':'dark'}} large_button" >
+					<i class="i_{{buttons[$index].type}} icon_custom"></i>
+					<span class="bt">{{buttons[$index].name}}</span>
+				</button><br>
+
+			</div>
+			<div class="col col-50 text-center" ng-if="$index + 1 < buttons.length">
+				<!-- <img ng-src="{{buttons[$index + 1].src}}" width="100%" /> -->
+				<button id="{{$index+1}}" ng-if="buttons[$index+1].type=='fan'" on-hold="OpenDimmer($event,BID)" value="{{!buttons[$index+1].state}}"  ng-click="send_to_smitch($event, buttons[$index+1].state,BID)" class="button button-{{buttons[$index+1].state>=1?'calm':'dark'}} large_button">
+					<i class="i_{{buttons[$index+1].type}} icon_custom"></i>
+					<span class="bt">{{buttons[$index + 1].name}}</span>
+				</button> 
+
+				<button id="{{$index+1}}" value="{{!buttons[$index+1].state}}" ng-if="buttons[$index+1].type!='fan'" ng-click="send_to_smitch($event, buttons[$index+1].state,BID)" class="button button-{{buttons[$index+1].state>=1?'calm':'dark'}} large_button">
+					<i class="i_{{buttons[$index+1].type}} icon_custom"></i>
+					<span class="bt">{{buttons[$index + 1].name}}</span>
+				</button>  
+				
+			</div>
+		</div>
+
+		</ion-slide-page>
+	</ion-slides>
+<!-- <div class="tabs tabs-icon-only">
+  <a class="tab-item">
+    <i class="icon ion-home"></i>
+  </a>
+  <a class="tab-item">
+    <i class="icon ion-star"></i>
+  </a>
+  <a class="tab-item">
+    <i class="icon ion-gear-a"></i>
+  </a>
+</div> -->
+
+	</ion-content>
+</ion-view>

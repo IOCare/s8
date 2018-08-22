@@ -1,0 +1,110 @@
+<ion-view ng-init="Init()" view-title="Remote Type" class="bg-bg">
+
+  <ion-content class="padding text-center">
+
+    <div class="row button-bar">
+      <!-- <div class="col"> -->
+	  <button id="0" class="button button-calm button-outline icon ion-volume-{{keys[0].icon}}" ng-click="SendGC($event)"></button>
+        
+      <!-- </div> -->
+      <!-- <div class="col"> -->
+        <button id="1" class="button button-assertive button-outline button-large" ng-click="SendGC($event)"><i class="ion-power"></i></button>
+      <!-- </div> -->
+      <!-- <div class="col"> -->
+        <button id="2" class="button button-calm button-outline button-large" ng-click="SendGC($event)"><i class="ion-android-{{keys[2].icon}}"></i>{{keys[2].name}}</button>
+      <!-- </div> -->
+    </div>
+    <!-- ./row -->
+    <hr>
+    <div class="row button-bar">
+      <!-- <div class="col col-33"> style="font-size: 0.9em;" -->
+        <button id="3" class="button button-calm button-outline button-large" ng-click="SendGC($event)">
+          CH+
+        </button>
+      <!-- </div> -->
+      <!-- <div class="col col-33"> -->
+        <button id="4" class="button button-dark button-outline button-large" ng-click="SendGC($event)"><i class="ion-chevron-up"></i></button>
+      <!-- </div> -->
+      <!-- <div class="col col-33"> -->
+        <button id="5" class="button button-positive button-outline button-large" ng-click="SendGC($event)">
+          Vol+
+        </button>
+      <!-- </div> -->
+    </div>
+    <!-- ./row -->
+
+    <div class="row button-bar">
+      <!-- <div class="col"> -->
+        <button id="6" class="button button-dark button-outline button-large" ng-click="SendGC($event)"><i class="ion-chevron-left"></i></button>
+      <!-- </div> -->
+      <!-- <div class="col"> -->
+        <button id="7" class="button button-balanced button-outline button-large" ng-click="SendGC($event)">OK</button>
+      <!-- </div> -->
+      <!-- <div class="col"> -->
+        <button id="8" class="button button-dark button-outline button-large" ng-click="SendGC($event)"><i class="ion-chevron-right"></i></button>
+      <!-- </div> -->
+    </div>
+    <!-- ./row -->
+
+    <div class="row button-bar">
+      <!-- <div class="col col-33"> -->
+        <button id="9" class="button button-calm button-outline button-large" ng-click="SendGC($event)">
+          CH-
+        </button>
+      <!-- </div> -->
+      <!-- <div class="col col-33"> -->
+        <button id="10" class="button button-dark button-outline button-large" ng-click="SendGC($event)"><i class="ion-chevron-down"></i></a>
+      <!-- </div> -->
+      <!-- <div class="col col-33"> -->
+        <button id="11" class="button button-calm button-outline button-large" ng-click="SendGC($event)">
+          Vol-
+        </button>
+      <!-- </div> -->
+    </div>
+    <!-- ./row -->
+
+    <hr>
+
+    <div class="row button-bar">
+      <!-- <div class="col"> -->
+        <button id="12" class="button button-calm button-outline button-large" ng-click="SendGC($event)">Back</button>
+      <!-- </div> -->
+      <!-- <div class="col"> -->
+        <button id="13" class="button button-calm button-outline button-large" ng-click="SendGC($event)">Menu</button>
+      <!-- </div> -->
+      <!-- <div class="col"> -->
+        <button id="14" class="button button-calm button-outline button-large" ng-click="SendGC($event)">{{keys[14].name}}</button>
+      <!-- </div> -->
+    </div>
+    <!-- ./row -->
+
+<hr>
+    <div class="row button-bar">
+      <!-- <div class="col"> -->
+        <button id="15" class="button button-assertive button-large " ng-click="SendGC($event)"></a>
+      <!-- </div> -->
+      <!-- <div class="col"> -->
+        <button id="16" class="button button-balanced button-large " ng-click="SendGC($event)"></a>
+      <!-- </div> -->
+      <!-- <div class="col"> -->
+        <button id="17" class="button button-energized button-large " ng-click="SendGC($event)"></a>
+      <!-- </div> -->
+      <!-- <div class="col"> -->
+        <button id="18" class="button button-positive button-large " ng-click="SendGC($event)"></a>
+      <!-- </div> -->
+    </div>
+    <!-- ./row -->
+<hr>
+    <div class="row button-bar">
+      <!-- <div class="col"> -->
+        <button id="19" class="button button-calm button-outline button-large" ng-click="SendGC($event)">Q.Menu</a>
+      <!-- </div> -->
+      <!-- <div class="col"> -->
+        <button id="20" class="button button-calm button-outline button-large" ng-click="SendGC($event)">AV Mode</a>
+      <!-- </div> -->
+
+    </div>
+    <!-- ./row -->
+
+    </ion-content>
+</ion-view>

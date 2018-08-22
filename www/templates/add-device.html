@@ -1,0 +1,23 @@
+<ion-modal-view class="bg-bg">
+<ion-header-bar class="bar bar-header bar-calm">
+  <h1 class="title">Assign Device to Room</h1>
+  <button class="button button-clear button-primary" ng-click="closeModal(1)">Cancel</button>
+</ion-header-bar>
+<ion-content class="padding">
+  <div class="list">
+	<label class="item item-input">
+	  <input ng-model="roomdata.name" disabled type="text">
+	  <input ng-model="roomdata.roomid" type="hidden">
+	</label>
+	<label class="item item-input item-select">
+	<div class="input-label">
+	  Device Name
+	</div>
+	<select ng-model="roomdata.boardid">
+	  <option ng-repeat="board in tempboards" value="{{board.id}}" >{{board.model}}</option>
+	</select>
+	</label>
+	<button class="button button-full button-balanced" ng-click="SaveDeviceAssignment(roomdata)">Save</button>
+  </div>
+</ion-content>
+</ion-modal-view>

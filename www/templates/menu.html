@@ -1,0 +1,47 @@
+<ion-side-menus enable-menu-with-back-views="false" class="bg-bg">
+  <ion-side-menu-content>
+    <ion-nav-bar class="bar-calm" ng-style="{'background-color': 'blue'}">
+      <ion-nav-back-button>
+      </ion-nav-back-button>
+
+      <ion-nav-buttons side="left">
+        <button class="button button-icon button-dark ion-navicon" menu-toggle="left"></button>
+      </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-nav-view name="menuContent" class="bg-bg"></ion-nav-view>
+  </ion-side-menu-content>
+
+  <ion-side-menu side="left" class="my-container">
+    <ion-header-bar class="bar-profile">
+    <div class="profile">
+       <img class="profile-picture" src="img/lo.png" />
+        <h3 class="name">Switch8</h3>
+    </div>
+
+    </ion-header-bar>
+    <ion-content >
+		<ul class="list">
+			<li>
+				<a class="item transp" menu-close nav-clear href="#/app/home"><i class="ion-ios-home-outline iocare_icon"></i> Home</a>
+			</li>
+			<li>
+				<a class="item transp" menu-close nav-clear href="#/app/configure"><i class="ion-ios-cog-outline iocare_icon"></i> Configure</a>
+			</li>
+      <li>
+        <a class="item transp" menu-close nav-clear href="#/app/scenes"><i class=" ion-heart iocare_icon"></i> Scenes</a>
+      </li>   
+<!--       <li>
+        <a class="item transp ion-wifi" menu-close nav-clear href="#/app/remote_type"> Remote</a>
+      </li>  -->         
+			<li>
+				<a class="item transp" menu-close nav-clear href="#/app/messages"><i class=" ion-ios-information-outline iocare_icon"></i> Notice</a>
+			</li>
+			<li>
+				<a class="item transp" menu-close nav-clear href="#/app/about"><i class=" ion-ios-information-outline iocare_icon"></i> About</a>
+			</li>
+      
+		</ul>
+
+    </ion-content>
+  </ion-side-menu>
+</ion-side-menus>

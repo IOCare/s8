@@ -1,0 +1,33 @@
+<ion-view view-title="Configure" ng-init="init()" class="bg-bg">
+
+<ion-floating-button ng-click="RunDiscovery()" has-footer="false" button-color="#009688" icon="ion-search" iconColor="#fff">
+</ion-floating-button>
+  <ion-content class="padding">
+
+    <ion-refresher
+    pulling-text="Pull to refresh..."
+    on-refresh="doRefresh()">
+  </ion-refresher>
+
+    <ion-list>
+      <ion-item ng-repeat="board in boards" class="item-avatar" href="#/app/configure/{{board.id}}">
+		  <img src="img/lo.png">
+		  <h2>{{board.model}}</h2>
+		  <p>{{board.type}} - {{board.url}}</p>
+      </ion-item>
+    </ion-list>
+	<div class="row text-center" ng-show="!boards.length">
+		<div class="col col-100 text-center">
+			<p  >No device Found</p>
+			<button ng-click="RunDiscovery()" class="button button-dark large_button"> 
+				<i class="ion-search icon_custom"></i>
+				<span class="bt">Scan Now</span>
+			</button>
+		</div>
+	</div>
+
+
+
+
+  </ion-content>
+</ion-view>

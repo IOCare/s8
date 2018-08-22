@@ -1,0 +1,56 @@
+
+<ion-view view-title="Sign In" hide-nav-bar="true" class="cover" ng-init="Init()">
+<!-- <ion-nav-title><img src="img/logo.png" width="40"></ion-nav-title> -->
+
+  <ion-content class="padding">
+
+  <div class="row responsive-sm padding remvoeBP foot">
+	  <div class="col">
+			<!-- <div class="app-logo"><img src="img/icon.png"></div>  -->
+			
+			<div class="list list-inset removePM">
+			  <!-- <label class="item item-input"><input type="text" ng-model="user.username" placeholder="Email Address" > </label>
+			  <label class="item item-input"><input type="password" ng-model="user.password" placeholder="Password" > </label> -->      
+	<form ng-submit="doLogin()">
+        <div class="list">
+          <label class="item item-input item-floating-label">
+            <span class="input-label">Username</span>
+            <input type="email" ng-model="loginData.login" placeholder="Email">
+          </label>
+		  
+
+          <label class="item item-input item-floating-label">
+            <span class="input-label">Password</span>
+            <input type="password" ng-model="loginData.password" placeholder="******">
+          </label>
+
+          <div class="padding">
+            <button type="submit" class="button ion-unlocked button-block button-assertive large_button1"> Log in</button>
+          </div>
+        </div>
+      </form>
+		 <center><p>OR</p></center>
+		 <div class="padding">
+            <button class="button ion-locked button-block button-assertive" ng-click="onregister()"> Register</button>
+		 </div>
+
+			</div>
+
+	  </div>
+  </div>
+  <p>myValue1 = {{myValue1}}</p>
+<nz-toggle tri-toggle ng-model="myValue1"></nz-toggle>
+	<!-- <div class="row  padding removePM foot1">
+	  <div class="col"> <a class=" button-positive button button-block" ng-click="facebookSignIn()"><i class="icon ion-social-facebook"></i></a> </div>
+	  <div class="col"> <a class="button-calm button button-block" ng-click="twitterSignIn()"><i class="icon ion-social-twitter"></i></a> </div>
+	</div> -->
+
+  </ion-content>
+<div class="tabs-striped  tabs-background-positive tabs-color-light ">
+    <div class="tabs custom-tab">
+      <a class="tab-item active" href="#/app/login"><i class="icon ion-unlocked"></i> Login</a>
+      <a class="tab-item" href="#/app/signup"> <i class="icon ion-person"></i> Sing Up </a>
+    </div>
+ </div>
+</ion-view>
+

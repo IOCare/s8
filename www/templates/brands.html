@@ -1,0 +1,32 @@
+<ion-view ng-init="Init()" view-title="Brands" class="bg-bg">
+  <ion-content class="padding ">
+
+     <div class="bar bar-header item-input-inset">
+          <input type="text" placeholder=" Search Brand" ng-model="search.brand_code" 
+                  style="width:100%; padding-left:11px;" />
+      </div>
+<!--     <ion-list>
+      <ion-item  type="item-text-wrap" href="#/app/remote/{{typeID}}/{{brand.id}}"
+        ng-repeat="brand in brands | filter:search | limitTo:listlength" class=" icon-left {{type.type_icon}}">
+        {{brand.brand_code}}
+      </ion-item>
+    </ion-list> -->
+
+<ion-list>
+  <ion-item class="item-dark" href="#/app/remote/{{typeID}}/{{brand.brand_id}}" ng-repeat="brand in brands | filter:search | limitTo:listlength" >
+    {{brand.name}}
+  </ion-item>
+</ion-list>
+
+
+     <ion-infinite-scroll ng-if="listlength<=friends.length" 
+            on-infinite="loadMore()" distance="3%">
+      </ion-infinite-scroll>
+    
+<!--     <a href="#/app/remote/{{typeID}}/{{brand.id}}" id="menu2-button8" style="border-radius:0px 0px 0px 0px;" class="button button-dark  button-block icon-left {{type.type_icon}}" ng-repeat="brand in brands">
+      {{brand.brand_code}}
+    </a> -->
+
+
+  </ion-content>
+</ion-view>

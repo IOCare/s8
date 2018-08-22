@@ -1,0 +1,54 @@
+
+
+<ion-view view-title="Sign Up"  hide-nav-bar="true" class="cover" >
+  <ion-content class="padding ">
+
+  <div class="row responsive-sm padding remvoeBP">
+	  <div class="col ">
+		   <div class="app-logo"><img src="img/icon.png"></div>
+			
+			<div class="list list-inset removePM">
+      <form name="regform" novalidate ng-submit="doregister()">
+        <div class="list">
+          <label class="item item-input item-floating-label">
+            <span class="input-label">Name</span>
+            <input name="name" type="text" ng-model="loginData.username" placeholder="Name" required>
+            <h6 style="color:red" ng-if="!regform.name.$valid"> Name is required</h6>
+          </label>
+
+          <label class="item item-input item-floating-label">
+            <span class="input-label">Password</span>
+            <input name="password" type="password" ng-model="loginData.password" placeholder="Password" required>
+            <h6 style="color:red" ng-if="!regform.password.$valid"> Password is required</h6>
+          </label>
+		  
+		   <label class="item item-input item-floating-label">
+            <span class="input-label">Email</span>
+            <input name="email" type="email" ng-model="loginData.email" placeholder="Email" required>
+            <h6 style="color:red" ng-if="!regform.email.$valid"> Email is required</h6>
+          </label>
+
+          <div class="padding">
+            <!-- <button type="submit" class="button button-block button-positive" ng-disabled="regform.$invalid">Submit</button>
+ -->			<button type="submit" class="button ion-person button-block button-balanced" ng-disabled="regform.$invalid"> Register </button>
+          </div>
+        </div>
+      </form>
+			</div>
+
+	  </div>
+  </div>
+
+	<!-- <div class="row  padding removePM">
+	  <div class="col"> <a class=" button-positive button button-block" ng-click="facebookSignIn()"><i class="icon ion-social-facebook"></i></a> </div>
+	  <div class="col"> <a class="button-calm button button-block" ng-click="twitterSignIn()"><i class="icon ion-social-twitter"></i></a> </div>
+	</div> -->
+
+  </ion-content>
+<div class="tabs-striped  tabs-background-positive tabs-color-light ">
+    <div class="tabs custom-tab">
+      <a class="tab-item " href="#/app/login"><i class="icon ion-unlocked"></i> Login </a>
+      <a class="tab-item active" href="#/app/signup"> <i class="icon ion-person"></i> Sing Up </a>
+    </div>
+  </div>
+</ion-view>

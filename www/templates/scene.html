@@ -1,0 +1,56 @@
+<ion-view view-title="{{properties.title}}" ng-init="Init()" class="bg-bg">
+	<ion-content class="padding" >
+	<h1>Edit Scene</h1> 
+	  <label class="item item-input">
+	   <span class="input-label">Rename Scene:</span>
+	    <input type="text" ng-model="scene.name">
+	  </label>
+	
+
+		<div class="list">
+			<div class="item item-toggle1" ng-repeat="boardOBJ in scene.boards" > {{BID=$index;""}}
+		     {{boardOBJ.model}}
+
+			<div class="list">
+
+
+			  <div class="item item-toggle" ng-repeat="light in boardOBJ" ng-if="light.type === 'fan'">
+			     {{light.name}}
+
+
+			     
+			     <div class="range toggle">
+			     <i class="icon ion-ios-sunny-outline"></i>
+			       <input type="range" name="volume" min="0" max="100" on-release="send_to_smitch(light,BID)"  ng-model="light.state">
+			       <i class="icon ion-ios-sunny"></i>
+			       </div>
+			     
+			  </div>
+
+			  <div class="item item-toggle" ng-repeat="light in boardOBJ" ng-if="light.type === 'light'">
+			     {{light.name}}
+
+
+			     <label class="toggle toggle-assertive" >
+			       <input type="checkbox" ng-click="send_to_smitch(light,BID)" ng-model="light.state">
+			       <div class="track">
+			         <div class="handle"></div>
+			       </div>
+			     </label>
+			  </div>
+
+
+			</div>
+
+
+		     </div>
+		</div>
+
+		<button class="button button-clear button-dark icon-left ion-android-calendar" ion-datetime-picker ng-model="formatted.date">Set Schedule:&nbsp; &nbsp;{{formatted.date}}</button><br>
+
+		<button class="button button-assertive" ng-click="SaveScene(scene.id)">
+		  Save
+		</button>
+
+	</ion-content>
+</ion-view>
