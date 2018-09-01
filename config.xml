@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.iocare.switch8" version="1.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>SWITCH8</name>
-    <description>An awesome Ionic/Cordova app.</description>
-    <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
+<widget id="com.iocare.switch8" version="1.2.8" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>SmartBoard WiFi</name>
+    <description>WiFi SmartBoard - Retrofit Home Automation</description>
+    <author email="research@iocare.in" href="https://www.iocare.in/">IOCT</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
@@ -85,9 +85,11 @@
     <plugin name="cordova-plugin-network-information" spec="^2.0.1" />
     <plugin name="cordova-plugin-statusbar" spec="^2.4.2" />
     <plugin name="cordova-plugin-x-toast" spec="^2.6.2" />
+    <plugin name="cordova-sqlite-ext" spec="^2.2.0" />
     <plugin name="cordova-plugin-nativestorage" spec="^2.3.2" />
     <plugin name="onesignal-cordova-plugin" spec="^2.4.2" />
     <plugin name="cordova-plugin-inappbrowser" spec="^3.0.0" />
+    <plugin name="cordova-plugin-mqtt" spec="^0.3.8" />
     <engine name="android" spec="7.0.0" />
     <engine name="ios" spec="^4.5.5" />
 </widget>

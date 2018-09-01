@@ -9,12 +9,17 @@ var connectionType = "";
 var ssidName;
 var appVersion;
 var db = null;
-angular.module('starter', ['ionic', 'rt.debounce','starter.controllers','starter.services','ion-floating-menu', 'monospaced.elastic', 'angularMoment','ion-datetime-picker','angular.circular-slider'])
+angular.module('starter', ['ionic','ngCordovaOauth','angular-md5', 'rt.debounce','starter.controllers','starter.services','ion-floating-menu', 'monospaced.elastic', 'angularMoment','ion-datetime-picker','angular.circular-slider'])
 
 .run(function($ionicPlatform,$rootScope, $state,DB) {
   $ionicPlatform.ready(function() {
     document.addEventListener("offline", onOffline, false);
     document.addEventListener("online", onOnline, false);
+
+	  ionic.Platform.fullScreen();
+	  if (window.StatusBar) {
+		return StatusBar.hide();
+    }
 
 	try
 	{
@@ -23,6 +28,8 @@ angular.module('starter', ['ionic', 'rt.debounce','starter.controllers','starter
 		}	
     //db = window.sqlitePlugin.openDatabase({name: 'iocareswitch.db', location: 'default'});
      DB.init();
+
+
 
     /*window.plugins.DeviceAccounts.getEmail(function(accounts){
       store.set('account',accounts);
@@ -436,6 +443,12 @@ function onOffline() {
     // Handle the online event
     var networkState = navigator.connection.type;
     showToast('offline:'+networkState);
+}
+function mqttSuccess(msg) {
+  showToast('Success :'+msg.message);
+}
+function mqttError() {
+  showToast('Error :'+msg.message);
 }
 function showToast(msg) {
   window.plugins.toast.showWithOptions(

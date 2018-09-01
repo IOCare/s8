@@ -87,6 +87,238 @@ angular.module('starter.services', ['starter.config'])
 	};
 })
 
+.service('GatewayService', function ($q, $http) {
+    return {
+  
+    sendtoGateway: function (gatewayurl, cmd) {
+      var deferred = $q.defer(),
+                promise = deferred.promise;
+                console.log(gatewayurl);
+      //Ajax Starts
+        $.ajax({
+            url: "http://"+gatewayurl+"/sendnode?cmd="+cmd,
+            type: 'GET',
+            data: '',
+            beforeSend: function(xhr) { 
+              //xhr.setRequestHeader("X-OCTOBER-REQUEST-HANDLER", "onCheckLogin");
+              xhr = {};
+              //xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+            }
+          })
+        .done(function(response) { 
+          console.log(response);
+          deferred.resolve(response);
+        })
+        .fail(function(response) {
+          console.log("in error ");
+          console.log(response);
+          deferred.reject(response);
+        });
+      //ajax Ends
+            promise.success = function (fn) {
+                promise.then(fn);
+                return promise;
+            };
+            promise.error = function (fn) {
+                promise.then(null, fn);
+                return promise;
+            };
+            return promise;
+
+      },
+
+    SaveDeviceConfig: function (config,ip,gw,sm) {
+      var deferred = $q.defer(),
+                promise = deferred.promise;
+                console.log(config);
+      //Ajax Starts
+        $.ajax({
+            url: "http://10.1.104.1/wifisave?s="+config.wifi_ssid+"&p="+config.wifi_key+"&ip="+ip+"&gw="+gw+"&sn="+sm,
+            type: 'GET',
+            data: '',
+            beforeSend: function(xhr) { 
+              //xhr.setRequestHeader("X-OCTOBER-REQUEST-HANDLER", "onCheckLogin");
+              xhr = {};
+              //xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+            }
+          })
+        .done(function(response) { 
+          console.log(response);
+          deferred.resolve(response);
+        })
+        .fail(function(response) {
+          console.log("in error ");
+          console.log(response);
+          deferred.reject(response);
+        });
+      //ajax Ends
+            promise.success = function (fn) {
+                promise.then(fn);
+                return promise;
+            };
+            promise.error = function (fn) {
+                promise.then(null, fn);
+                return promise;
+            };
+            return promise;
+
+      },
+
+    getUserInfo: function (access_token) {
+      var deferred = $q.defer(),
+                promise = deferred.promise;
+                
+      //Ajax Starts
+        $.ajax({
+            url: "https://alexa.iocare.in/api/users",
+            type: 'GET',
+            data: '',
+            beforeSend: function(xhr) { 
+              xhr.setRequestHeader("Accept", "application/json");
+              //xhr = {};
+			  xhr.setRequestHeader("Authorization", "Bearer "+access_token);
+              xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+            }
+          })
+        .done(function(response) { 
+          //console.log(response);
+          deferred.resolve(response);
+        })
+        .fail(function(response) {
+          console.log("in error ");
+          console.log(response);
+          deferred.reject(response);
+        });
+      //ajax Ends
+            promise.success = function (fn) {
+                promise.then(fn);
+                return promise;
+            };
+            promise.error = function (fn) {
+                promise.then(null, fn);
+                return promise;
+            };
+            return promise;
+
+      },
+
+    getUserDevices: function (access_token) {
+      var deferred = $q.defer(),
+                promise = deferred.promise;
+                
+      //Ajax Starts
+        $.ajax({
+            url: "https://alexa.iocare.in/api/devices",
+            type: 'GET',
+            data: '',
+            beforeSend: function(xhr) { 
+              xhr.setRequestHeader("Accept", "application/json");
+              //xhr = {};
+			  xhr.setRequestHeader("Authorization", "Bearer "+access_token);
+              xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+            }
+          })
+        .done(function(response) { 
+          //console.log(response);
+          deferred.resolve(response);
+        })
+        .fail(function(response) {
+          console.log("in error ");
+          console.log(response);
+          deferred.reject(response);
+        });
+      //ajax Ends
+            promise.success = function (fn) {
+                promise.then(fn);
+                return promise;
+            };
+            promise.error = function (fn) {
+                promise.then(null, fn);
+                return promise;
+            };
+            return promise;
+
+      },
+
+
+    saveUserDevices: function (device_data,access_token) {
+      var deferred = $q.defer(),
+                promise = deferred.promise;
+                console.log(device_data);
+      //Ajax Starts
+        $.ajax({
+            url: "https://alexa.iocare.in/api/devices",
+            type: 'POST',
+            data: device_data,
+            beforeSend: function(xhr) { 
+              xhr.setRequestHeader("Accept", "application/json");
+              //xhr = {};
+			  xhr.setRequestHeader("Authorization", "Bearer "+access_token);
+              xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+            }
+          })
+        .done(function(response) { 
+          //console.log(response);
+          deferred.resolve(response);
+        })
+        .fail(function(response) {
+          console.log("in error ");
+          console.log(response);
+          deferred.reject(response);
+        });
+      //ajax Ends
+            promise.success = function (fn) {
+                promise.then(fn);
+                return promise;
+            };
+            promise.error = function (fn) {
+                promise.then(null, fn);
+                return promise;
+            };
+            return promise;
+
+      },
+
+    updateGW: function (gatewayurl) {
+      var deferred = $q.defer(),
+                promise = deferred.promise;
+                console.log(gatewayurl);
+      //Ajax Starts
+        $.ajax({
+            url: "http://"+gatewayurl+"/selfupdate",
+            type: 'GET',
+            data: '',
+            beforeSend: function(xhr) { 
+              //xhr.setRequestHeader("X-OCTOBER-REQUEST-HANDLER", "onCheckLogin");
+              xhr = {};
+              //xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+            }
+          })
+        .done(function(response) { 
+          console.log(response);
+          deferred.resolve(response);
+        })
+        .fail(function(response) {
+          console.log("in error ");
+          console.log(response);
+          deferred.reject(response);
+        });
+      //ajax Ends
+            promise.success = function (fn) {
+                promise.then(fn);
+                return promise;
+            };
+            promise.error = function (fn) {
+                promise.then(null, fn);
+                return promise;
+            };
+            return promise;
+
+      }
+
+
+  };
+})
 .service('DeviceService', function ($q, $http) {
     return {
 	
@@ -150,30 +382,23 @@ angular.module('starter.services', ['starter.config'])
 		talkToSwitch: function (burl, model,boardButtons) {
 			var deferred = $q.defer(),
                 promise = deferred.promise;
-
+				var settingsData = {externalIp:'',home_router:''};
 
                 //this.showToast1('sent'+model);
-                var settingsData = store.get('settingsData');
+                settingsData = store.get('settingsData');
 
-                var ipLast = burl.split('.')[3];
-                var ipLastDigit = ipLast.split(':')[0];
-                var parameters = ipLast.split(':')[1];
-                parameters = parameters.split('/')[1];
-                
-                var forwardPort = parseInt(ipLastDigit)+40000;
-                console.log('IPLAST:'+forwardPort);
                 console.log(connectionType);
-                //if ((connectionType=='2g') || (connectionType=='3g') || (connectionType=='4g'))
-                //{
+                if ((connectionType=='2g') || (connectionType=='3g') || (connectionType=='4g'))
+                {
                 	
-                //	burl = "http://"+settingsData.externalIp+":"+forwardPort+"/"+parameters;
-                //}else 
-                //{
+                	//burl = "http://"+settingsData.externalIp+":"+forwardPort+"/"+parameters;
+                }else 
+                {
                 	//if (ssidName!=settingsData.home_router)
                 	//{
                 		//burl = "http://"+settingsData.externalIp+":"+forwardPort+"/"+parameters;
                 	//}
-                //}
+                }
                 
                 console.log(burl);
 
@@ -192,13 +417,7 @@ angular.module('starter.services', ['starter.config'])
 			.done(function(response) { 
 			  console.log(response);
 			  store.set(model,boardButtons);
-				if (burl=='http://10.1.25.14:80')
-				{
-					console.log('old board');
-				}else
-				{
-					console.log('new board');
-				}
+
 				deferred.resolve(response);
 			})
 			.fail(function(response) {
@@ -683,6 +902,52 @@ angular.module('starter.services', ['starter.config'])
             return true;
         }
     }
+})
+
+
+// Resource service example
+.factory('Config', function(DB) {
+    var self = this;
+    
+    self.all = function() {
+        return DB.query('SELECT * FROM configurations')
+        .then(function(result){
+            return DB.fetchAll(result);
+        });
+    };
+    
+    self.getById = function(id) {
+        return DB.query('SELECT * FROM configurations WHERE id = ?', [id])
+        .then(function(result){
+            return DB.fetch(result);
+        });
+    };
+    self.inserInto = function(keyname,value) {
+        return DB.query('INSERT INTO configurations (keyname,value) VALUES ("'+keyname+'", "'+value+'")')
+        .then(function(result){
+            return result;
+        });
+    }; 
+    self.inserUpdateInto = function(id,keyname,value) {
+        return DB.query('INSERT or REPLACE INTO configurations (id, keyname,value) VALUES ((SELECT id from configurations WHERE id="'+id+'"),"'+keyname+'", "'+value+'")')
+        .then(function(result){
+            return result;
+        });
+    };        
+    self.setUpdate = function(id,fldname,value) {
+        return DB.query('UPDATE configurations SET "'+fldname+'"="'+value+'" WHERE id = ?', [id])
+        .then(function(result){
+            return result;
+        });
+    };  
+    self.dropConfigTable = function(id,fldname) {
+        return DB.query('DROP TABLE configurations')
+        .then(function(result){
+            return DB.fetch(result);
+        });
+    }; 
+
+    return self;
 })
 // DB wrapper
 .factory('DB', function($q, DB_CONFIG) {

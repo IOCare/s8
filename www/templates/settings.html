@@ -1,29 +1,65 @@
-<ion-view view-title="Settings" ng-init="onInit()">
-  <ion-content class="padding">
-    <h1>Settings</h1>
-    <div class="align-center" style="text-align:center;">
+<ion-view view-title="Settings" class="bg-bg" ng-init="init()">
+  <ion-content class="padding" scroll="false">
 
+<br>
+<div class="list">
+  <label class="item item-input">
+    <input type="text" ng-model="config1.ip" placeholder="Gateway1 IP">
+  </label>
+</div>
+<div class="list">
 		<label class="item item-input">
-			<div class="input-label">
-			  External IP/Domain
-			</div>
-			<input ng-model="settingsData.externalIp" type="text">
+			<input type="text" ng-model="config.ip" placeholder="Gateway2 IP">
 		</label>
+	</div>
 
-		<label class="item item-input item-select">
-			<div class="input-label">
-			  Home SSID
-			</div>
-			<select ng-model="settingsData.home_router">
-				<option value="" disabled>Select SSID</option>
-			  <option ng-repeat="router in routers track by $index" value="{{router}}" >{{router.SSID}}-{{router.BSSID}}</option>
-			</select>
-		</label> 
+    <button class="button button-full button-balanced" ng-click="SaveSettings()">Save</button>
 
+	<div class="list">
+<!-- 	  <div class="item item-calm text-center">
+		App Status
+	  </div>
+	  <div class="item item-button-right">
+	    Board ID
+	    <button class="button button-positive" >
+	      {{healthData.gatewayid}}
+	    </button>
+	  </div>
+	  <div class="item item-button-right">
+	    HW Version
+	    <button class="button button-positive">
+	      {{healthData.version}}
+	    </button>
+	  </div> -->
+	  <div class="item item-button-right">
+	    SW Version
+	    <button class="button button-positive">
+	      <span class="version"></span>
+	    </button>
+	  </div>
+<!-- 	  <div class="item item-button-right">
+	    Signal Stregth
+	    <button class="button button-positive">
+	      {{healthData.rssi}}
+	    </button>
+	  </div> -->
+	  <button class="button button-full button-balanced" ng-click="scanNow()">Configure Device</button><br>
+	  <!-- <button class="button button-full button-balanced" ng-click="connectWifi()">Connect WiFI</button> -->
 
+	  <button class="button button-full button-positive" ng-click="doAuth()">Login</button>
+<br>
+<div class="list">
+    <a class="item item-avatar" href="#">
+      <img src="https://secure.gravatar.com/avatar/{{user.hash}}">
+      <h2>{{user.name}}</h2>
+      <p>{{user.email}}</p>
+    </a>
+</div>
+<div class="text-center">
+<button ng-show="user.id" class="button button-positive" ng-click="SaveDevice()">Sync Devices</button>
+</div>
 
-		<button class="button button-full button-balanced" ng-click="SaveSettings()">Save</button>
-    </div>
+	</div>
 
   </ion-content>
 </ion-view>

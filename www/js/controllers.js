@@ -252,7 +252,7 @@ angular.module('starter.controllers', ['starter.services'])
 	$scope.onSlide2 = function() {
 		console.log("im in slide");
 		console.log($scope.boardButtons[$scope.pressedButtonOBJ.bid][$scope.pressedButtonOBJ.id].state);
-		$scope.send_to_smitch($scope.pressedButtonOBJ.e,$scope.boardButtons[$scope.pressedButtonOBJ.bid][$scope.pressedButtonOBJ.id].state,$scope.pressedButtonOBJ.bid);
+		$scope.send_to_smitch($scope.pressedButtonOBJ.e,Math.floor($scope.boardButtons[$scope.pressedButtonOBJ.bid][$scope.pressedButtonOBJ.id].state),$scope.pressedButtonOBJ.bid);
 	};
 
 
@@ -1469,7 +1469,7 @@ $scope.disableSwipe = function() {
 	}
 	$scope.init = function()
 	{
-		console.log("im in discovery...");
+		console.log('in ConfigureCtrl Init');
 		$scope.show();
 		//$scope.boards = [];
 		try{
@@ -1504,35 +1504,39 @@ $scope.disableSwipe = function() {
 		$scope.show();
 		$scope.boards = [];
 
-		DeviceService.GetBoards("https://www.iocare.in/mehta.json")
-		.then(function (response) {
-				console.log(response);
-				$scope.boards = JSON.parse(response);
+		try{
+			DeviceService.GetBoards("https://www.iocare.in/mehta.json")
+			.then(function (response) {
+					console.log(response);
+					$scope.boards = JSON.parse(response);
 
-				store.set('board',$scope.boards);
+					store.set('board',$scope.boards);
 
-				angular.forEach($scope.boards, function(board) {
-						Devices.setDevice(board).then(function(result){
-							console.log('inserted');
-							console.log(result);
-	
-						});
+					angular.forEach($scope.boards, function(board) {
+							Devices.setDevice(board).then(function(result){
+								console.log('inserted');
+								console.log(result);
+		
+							});
+					});
+		
+					$scope.hide();
+					console.log("Boards");
+					console.log($scope.boards);
+					console.log("detecting devices");
+					//$scope.dd = DeviceData;
+					console.log(BoardData.SetdvcList($scope.boards));///clever
+					$scope.$broadcast('scroll.refreshComplete');
+					
+				}, function (resp) {
+					console.log(resp);
+					$scope.hide();
+					//alert('Error Connecting to server. Make sure you have active Internet connection!');
 				});
-	
-				$scope.hide();
-				console.log("Boards");
-				console.log($scope.boards);
-				console.log("detecting devices");
-				//$scope.dd = DeviceData;
-				console.log(BoardData.SetdvcList($scope.boards));///clever
-				$scope.$broadcast('scroll.refreshComplete');
-				
-			}, function (resp) {
-				console.log(resp);
-				$scope.hide();
-				//alert('Error Connecting to server. Make sure you have active Internet connection!');
-			});
-
+			}
+			catch(e){
+				console.log(e);
+			}
 
 
 	}
@@ -1885,7 +1889,7 @@ $scope.disableSwipe = function() {
 				//console.log($scope.boardButtons);
 			    
 				var burl='';
-				if ($scope.buttons.data[event.target.id].url=='10.1.25.14:80')
+				if ($scope.buttons.data[event.target.id].url=='10.1.25.200:80')
 				{
 					burl = "http://"+$scope.buttons.data[event.target.id].url+"/sw?swn=11&state="+Scene1Signature;
 				}else if ($scope.buttons.data[event.target.id].url=='10.1.25.15:80') 
@@ -1921,7 +1925,8 @@ $scope.disableSwipe = function() {
   	
 	//$scope.myboard = BoardData.GetdvcListById(id);
 	//console.log(id);
-    $scope.deviceData.name = $scope.buttons.data[id].name;
+		$scope.deviceData.name = $scope.buttons.data[id].name;
+
     $scope.deviceData.url = $scope.buttons.data[id].url;
 	$scope.deviceData.id = id;
 	$scope.deviceData.type = $scope.buttons.data[id].type;
@@ -1935,6 +1940,7 @@ $scope.disableSwipe = function() {
   $scope.SaveDevice = function(u) {
     console.log(u);
 	$scope.buttons.data[u.id].name = u.name;
+
 	$scope.buttons.data[u.id].type = u.type;
 	store.set($scope.myboard.model,$scope.buttons.data);
     //alert('device saved!');
@@ -1970,42 +1976,339 @@ $scope.disableSwipe = function() {
         });
     }
 })
-.controller('SettingsCtrl', function($scope, $stateParams,$ionicLoading) {
+.controller('SettingsCtrl', function($scope, $stateParams,$ionicLoading,GatewayService,Config,$ionicPopup,$timeout,$state,$cordovaOauth, md5) {
 	$scope.routers = [];
 	$scope.settingsData = {externalIp:'',home_router:''};
+
+	$scope.access_token="";
+	$scope.user={};
+	$scope.devicedata={};
+
+	$scope.config = {ip:'',ssid:null,key:null,wifi_key:null,wifi_ssid:null};
+	$scope.config1 = {ip:'',ssid:null,key:null,wifi_key:null,wifi_ssid:null};
+	$scope.healthData= {gatewayid:null,version:null,rssi:null};
+	$scope.ap={settings:null};
+
+	$scope.device_template={
+		endpointId: "SmartBoardHome141016-40",
+	 manufacturerName: "ioCare",
+	 friendlyName: "Desk Light",
+	 description: "ioCare Smart Switch",
+	 displayCategories: ["LIGHT"],
+	 cookie: {
+		 on: "4,1",
+		 off: "4,0",
+		 did: "SmartBoardHome141016"
+	 },
+	 capabilities:
+	 [
+		 {
+			 type: "AlexaInterface",
+			 interface: "Alexa",
+			 version: "3"
+		 },
+		 {
+			 interface: "Alexa.PowerController",
+			 version: "3",
+			 type: "AlexaInterface",
+			 properties: {
+				 supported: [{
+					 name: "powerState"
+				 }],
+					retrievable: true
+			 }
+		 }
+	 ]
+
+ };
+
+var all_devices=[
+{btnName:"Center Light",btnAction:"3;1;1;1;2;0",btnActionON:"3;1;1;1;2;1"},//Manan	
+{btnName:"Passage Light",btnAction:"3;2;1;1;2;0",btnActionON:"3;2;1;1;2;1"},
+{btnName:"Track Light",btnAction:"3;3;1;1;2;0",btnActionON:"3;3;1;1;2;1"},
+{btnName:"Wall Light",btnAction:"3;4;1;1;2;0",btnActionON:"3;4;1;1;2;1"},
+{btnName:"Window Light",btnActionOFF:"3;5;1;1;2;0",btnActionON:"3;5;1;1;2;1"},
+{btnName:"Fan1",btnActionOFF:"3;6;1;1;2;0",btnActionON:"3;6;1;1;2;1"},
+{btnName:"Entry Light",btnActionOFF:"1;1;1;1;2;0",btnActionON:"1;1;1;1;2;1"},
+{btnName:"Wardrobe",btnActionOFF:"1;2;1;1;2;0",btnActionON:"1;2;1;1;2;1"},
+{btnName:"Light9",btnActionOFF:"1;3;1;1;2;0",btnActionON:"1;3;1;1;2;1"},
+{btnName:"Bedside Light",btnActionOFF:"1;4;1;1;2;0",btnActionON:"1;4;1;1;2;1"},
+{btnName:"Light11 Light",btnActionOFF:"1;5;1;1;2;0",btnActionON:"1;5;1;1;2;1"},
+{btnName:"Light12",btnActionOFF:"1;6;1;1;2;0",btnActionON:"1;6;1;1;2;1"},
+{btnName:"Bedside Light",btnActionOFF:"6;1;1;1;2;0",btnActionON:"6;1;1;1;2;1"}, //Avni
+{btnName:"Hanging Light",btnActionOFF:"6;2;1;1;2;0",btnActionON:"6;2;1;1;2;1"},
+{btnName:"Fan",btnActionOFF:"6;3;1;1;2;0",btnActionON:"6;3;1;1;2;1"},
+{btnName:"Light4",btnActionOFF:"6;4;1;1;2;0",btnActionON:"6;4;1;1;2;1"},
+{btnName:"Dressing Light",btnActionOFF:"2;1;1;1;2;0",btnActionON:"2;1;1;1;2;1"}, 
+{btnName:"Wall Light2",btnActionOFF:"2;2;1;1;2;0",btnActionON:"2;2;1;1;2;1"},
+{btnName:"bedroom window",btnActionOFF:"2;3;1;1;2;0",btnActionON:"1;3;1;1;2;1"},
+{btnName:"Track light",btnActionOFF:"2;4;1;1;2;0",btnActionON:"2;4;1;1;2;1"},
+{btnName:"Center Light2",btnActionOFF:"2;5;1;1;2;0",btnActionON:"2;5;1;1;2;1"},
+{btnName:"TV Side Light",btnActionOFF:"2;6;1;1;2;0",btnActionON:"2;6;1;1;2;1"},
+{btnName:"Wall Light",btnActionOFF:"2;7;1;1;2;0",btnActionON:"2;7;1;1;2;1"},
+{btnName:"Light13",btnActionOFF:"2;8;1;1;2;0",btnActionON:"2;8;1;1;2;1"},
+{btnName:"Light14",btnActionOFF:"5;1;1;1;2;0",btnActionON:"5;1;1;1;2;1"},
+{btnName:"Light15",btnActionOFF:"5;2;1;1;2;0",btnActionON:"5;2;1;1;2;1"},
+{btnName:"Light16",btnActionOFF:"5;3;1;1;2;0",btnActionON:"5;3;1;1;2;1"},
+{btnName:"Light17",btnActionOFF:"5;4;1;1;2;0",btnActionON:"5;4;1;1;2;1"},
+{btnName:"Rutav Light1",btnActionOFF:"10;1;1;1;2;0",btnActionON:"10;1;1;1;2;1"},//Rutav
+{btnName:"Rutav Light2",btnActionOFF:"10;2;1;1;2;0",btnActionON:"10;2;1;1;2;1"},
+{btnName:"Rutav Light3",btnActionOFF:"10;3;1;1;2;0",btnActionON:"10;3;1;1;2;1"},
+{btnName:"Rutav Light4",btnActionOFF:"10;4;1;1;2;0",btnActionON:"10;4;1;1;2;1"},
+{btnName:"Rutav Light5",btnActionOFF:"13;1;1;1;2;0",btnActionON:"13;1;1;1;2;1"},
+{btnName:"Rutav Light6",btnActionOFF:"13;2;1;1;2;0",btnActionON:"13;2;1;1;2;1"},
+{btnName:"Rutav Light7",btnActionOFF:"13;3;1;1;2;0",btnActionON:"13;3;1;1;2;1"},
+{btnName:"Rutav Light8",btnActionOFF:"10;8;1;1;2;0",btnActionON:"10;8;1;1;2;1"},
+{btnName:"Rutav Light9",btnActionOFF:"8;1;1;1;2;0",btnActionON:"8;1;1;1;2;1"},
+{btnName:"Rutav Light10",btnActionOFF:"8;2;1;1;2;0",btnActionON:"8;2;1;1;2;1"},
+{btnName:"Rutav Light11",btnActionOFF:"8;3;1;1;2;0",btnActionON:"8;3;1;1;2;1"},
+{btnName:"Rutav Light12",btnActionOFF:"8;4;1;1;2;0",btnActionON:"8;4;1;1;2;1"},
+{btnName:"Rutav Light12",btnActionOFF:"8;6;1;1;2;0",btnActionON:"8;6;1;1;2;1"},
+{btnName:"Rutav Light12",btnActionOFF:"8;7;1;1;2;0",btnActionON:"8;7;1;1;2;1"},
+{btnName:"Light1",btnActionOFF:"4;1;1;1;2;0",btnActionON:"4;1;1;1;2;1"},//Living
+{btnName:"Center Light",btnActionOFF:"4;2;1;1;2;0",btnActionON:"4;2;1;1;2;1"},
+{btnName:"Center Light",btnActionOFF:"4;3;1;1;2;0",btnActionON:"4;3;1;1;2;1"},
+{btnName:"Center Light",btnActionOFF:"4;4;1;1;2;0",btnActionON:"4;4;1;1;2;1"},
+{btnName:"Center Light",btnActionOFF:"4;5;1;1;2;0",btnActionON:"4;5;1;1;2;1"},
+{btnName:"Center Light",btnActionOFF:"4;6;1;1;2;0",btnActionON:"4;6;1;1;2;1"},
+{btnName:"Center Light",btnActionOFF:"4;7;1;1;2;0",btnActionON:"4;7;1;1;2;1"},
+{btnName:"Center Light",btnActionOFF:"4;8;1;1;2;0",btnActionON:"4;8;1;1;2;1"},
+{btnName:"Center Light",btnActionOFF:"7;1;1;1;2;0",btnActionON:"7;1;1;1;2;1"},
+{btnName:"Center Light",btnActionOFF:"7;2;1;1;2;0",btnActionON:"7;2;1;1;2;1"},
+{btnName:"Center Light",btnActionOFF:"7;3;1;1;2;0",btnActionON:"7;3;1;1;2;1"},
+{btnName:"Center Light",btnActionOFF:"7;4;1;1;2;0",btnActionON:"7;4;1;1;2;1"}
+];
+
+$scope.makeDevices = function(id){
+	 $scope.d = all_devices.map(function(obj,index) {
+	 var endpointId = obj.btnActionON;
+	 var rObj = {
+			endpointId: "SmartBoardNew3831787-"+endpointId.replace(/;/g, "-")+"-"+id,
+		 manufacturerName: "ioCare",
+		 friendlyName: obj.btnName,
+		 description: "ioCare Smart Switch",
+		 displayCategories: ["LIGHT"],
+		 cookie: {
+			 on: obj.btnActionON,
+			 off: obj.btnActionOFF,
+			 did: "SmartBoardNew3831787"
+		 },
+		 capabilities:
+		 [
+			 {
+				 type: "AlexaInterface",
+				 interface: "Alexa",
+				 version: "3"
+			 },
+			 {
+				 interface: "Alexa.PowerController",
+				 version: "3",
+				 type: "AlexaInterface",
+				 properties: {
+					 supported: [{
+						 name: "powerState"
+					 }],
+						retrievable: true
+				 }
+			 }
+		 ]
+
+	 };
+
+	 return rObj;
+
+ });
+
+
+ $scope.devicedata={devices:JSON.stringify($scope.d)};
+		 console.log("All device Data:");
+	 console.log($scope.devicedata);
+}	
+
+
+
+var isInteger = Number.isInteger || function(value) {
+	return typeof value === "number" &&
+			 isFinite(value) &&
+			 Math.floor(value) === value;
+};
+var getQuality = function (dBm) {
+	return parseFloat(((2 * (dBm + 100)) / 100).toFixed(2));
+}
+var rs = function (dBm) {
+	if (!isInteger(dBm)) throw new Error ('dBm must be an integer');
+	var quality = dBm <= -100 ? 0 : dBm >= -50 ? 1 : getQuality(dBm);
+	return Math.ceil(quality*100);
+};
+$scope.rssi=function(){
+	return rs(-57);
+}
+
+
+$scope.show = function() {
+	$ionicLoading.show({
+		template: 'Processing...'
+	});
+};
 
 	$scope.onInit = function(value) {
 		console.log("In settings");
 		$scope.settingsData = store.get('settingsData');
 
+		console.log('Welcome to Settings');
+	
+		try{
+		NativeStorage.getItem("settingdata",$scope.fSuc,$scope.fErr);
+		NativeStorage.getItem("settingdata1",$scope.fSuc1,$scope.fErr);
+		}catch(e){
+			console.log(e);
+		}
+
+		ionic.Platform.ready(function(){
+
+			try{
+				cordova.getAppVersion.getVersionNumber().then(function (version) {
+				$('.version').text(version);
+			}); 
+			}catch(e){
+				console.log(e);
+			}
+	
+	
+			try{
+			 NativeStorage.getItem("oauth",function(msg) {
+				console.log('data got success:');
+				//console.log(msg.access_token);
+				$scope.access_token = msg.access_token;
+				},function(msg) {
+				console.log('get Error:');
+				console.log(msg);
+				});
+			}catch(e){
+				console.log(e);
+			}
+	
+			try{
+			 NativeStorage.getItem("user",function(msg) {
+				console.log('data got success:');
+				console.log(msg);
+	
+				$scope.user = msg;
+				$scope.user.hash = md5.createHash(msg.email);
+				$scope.makeDevices(msg.id);
+	
+	
+				$scope.$apply();
+	
+				
+	
+				},function(msg) {
+				console.log('get Error:');
+				console.log(msg);
+				});
+			}catch(e){
+				console.log(e);
+			}
+	
+	
+				});
 		//WifiWizard.listNetworks($scope.listHandler, $scope.fail);
 		//WifiWizard.getScanResults({numLevels: false}, $scope.listHandler, $scope.fail);
-		$scope.show();
+		//$scope.show();
 
 	};
 
-
-
-	$scope.listHandler = function(ssids) {
-		console.log(ssids);
-
-		$scope.routers = ssids.filter(function(obj) {
-			return obj != '"""'; 
-		});
-		console.log($scope.routers);
-		$scope.hide();
-	};
 
 	$scope.fail = function(value) {
 		console.log(value);
 		$scope.hide();
 	};
+  $scope.fSuc = function(msg) {
+    console.log(msg);
+    $scope.config.ip=msg.ip;
+  }
+  $scope.fSuc1 = function(msg) {
+    console.log(msg);
+    $scope.config1.ip=msg.ip;
+  }
+  $scope.fErr = function(msg) {
+    console.log(msg);
+  }
+	/*
 	$scope.SaveSettings = function() {
 		console.log($scope.settingsData);
 		$scope.settingsData.home_router = $scope.settingsData.home_router.replace(/"/g , "");
 		store.set('settingsData',$scope.settingsData);
 		console.log('Setting Saved!');
+	};*/
+
+
+  $scope.SaveSettings = function() {
+    console.log($scope.config);
+    //store.set('config', $scope.config);
+    //Config.inserUpdateInto(1,'value',$scope.config.ip).then(function(conf) {
+      //  console.log(conf);
+    //});
+
+     NativeStorage.setItem("settingdata", $scope.config,function(msg) {
+        console.log('save2 success:');
+        console.log(msg);
+      },function(msg) {
+        console.log('save Error:');
+        console.log(msg);
+      });
+      NativeStorage.setItem("settingdata1", $scope.config1,function(msg) {
+        console.log('save1 success:');
+        console.log(msg);
+      },function(msg) {
+        console.log('save Error:');
+        console.log(msg);
+      });
+
+    $scope.showPopup('Settings Saved!');
 	};
+	
+
+	$scope.showPopup = function(data) {
+		$scope.data = {}
+ 
+		// An elaborate, custom popup
+		var myPopup = $ionicPopup.show({
+			template: '<h5 class="center">'+data+'</h5>',
+			title: 'Settings',
+			subTitle: '',
+			scope: $scope,
+			buttons: [
+				/*{ text: 'Cancel' },*/
+				{
+					text: '<b>OK</b>',
+					type: 'button-positive',
+					onTap: function(e) {
+						/*if (!$scope.data.wifi) {
+							//don't allow the user to close unless he enters wifi password
+							e.preventDefault();
+						} else {
+ IP: http://139.59.95.112/
+ Root:root
+ pass: KDyHgTou
+ 
+ Userlogin: isbmsot
+ Pass: reboZu91
+						 
+							return $scope.data.wifi;
+						}*/
+					}
+				},
+			]
+		});
+		myPopup.then(function(res) {
+			console.log('Tapped!', res);
+		});
+		$timeout(function() {
+			 myPopup.close(); //close the popup after 3 seconds for some reason
+		}, 3000);
+	 };
+
 	$scope.show = function() {
 		$ionicLoading.show({
 			template: '<div ng-controller="LoadCtrl">Scaning Network..<br /><br /><button ng-click="hide()" class="button button-positive button-icon icon ion-close-circled"></button></div>',
@@ -2020,6 +2323,90 @@ $scope.disableSwipe = function() {
 		$ionicLoading.hide();
 		console.log('trying to hid');
 	}
+//AUth Flow  starts
+
+$scope.doAuth=function(){
+	$cordovaOauth.iocare("6", ["access-alexa"],{auth_type:'token'}).then(function(result) {
+		console.log("Response Object -> " + JSON.stringify(result));
+		$scope.access_token = result.access_token;
+		 NativeStorage.setItem("oauth", result,function(msg) {
+			console.log('oauth save success:');
+			console.log(msg);
+			$scope.getResource();
+			},function(msg) {
+			console.log('oauth save Error:');
+			console.log(msg);
+			var alertPopup = $ionicPopup.alert({
+				title: 'Login Failed',
+				template: 'Authentication Error! ' + msg
+			});
+
+			});
+
+	}, function(error) {
+		console.log("Error -> " + error);
+	});
+
+
+}
+
+$scope.getResource=function(){
+	//console.log($scope.access_token);
+			GatewayService.getUserInfo($scope.access_token).success(function(data) {
+					console.log(data);
+		 NativeStorage.setItem("user", data,function(msg) {
+			console.log('user save success:');
+			console.log(msg);
+			var alertPopup = $ionicPopup.alert({
+				title: 'Login Success',
+				template: 'Account Connected!'
+			});
+
+			},function(msg) {
+			console.log('user save Error:');
+			console.log(msg);
+			var alertPopup = $ionicPopup.alert({
+				title: 'Login Failed',
+				template: 'Account could not be connected!'
+			});
+
+			});
+
+			}).error(function(data) {
+					var alertPopup = $ionicPopup.alert({
+							title: 'Request failed!',
+							template: 'Please check your credentials!'
+					});
+			});
+
+			GatewayService.getUserDevices($scope.access_token).success(function(data) {
+					console.log(data);
+			}).error(function(data) {
+					var alertPopup = $ionicPopup.alert({
+							title: 'Request failed!',
+							template: 'Please check your credentials!'
+					});
+			});
+
+}
+
+$scope.SaveDevice=function(){
+			GatewayService.saveUserDevices($scope.devicedata,$scope.access_token).success(function(data) {
+					console.log(data);
+					var alertPopup = $ionicPopup.alert({
+							title: 'Sync',
+							template: 'Device information synced with server!'
+					});
+
+			}).error(function(data) {
+					var alertPopup = $ionicPopup.alert({
+							title: 'Request failed!',
+							template: 'Please check your credentials!'
+					});
+			});
+}
+
+
 
 })
 
