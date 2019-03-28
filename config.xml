@@ -86,7 +86,7 @@
     <plugin name="cordova-plugin-statusbar" spec="^2.4.2" />
     <plugin name="cordova-plugin-x-toast" spec="^2.6.2" />
     <plugin name="cordova-plugin-nativestorage" spec="^2.3.2" />
-    <plugin name="onesignal-cordova-plugin" spec="^2.4.2" />
+    <plugin name="onesignal-cordova-plugin" spec="^2.4.6" />
     <plugin name="cordova-plugin-inappbrowser" spec="^3.0.0" />
     <plugin name="cordova-plugin-mqtt" spec="^0.3.8" />
     <engine name="android" spec="7.0.0" />
